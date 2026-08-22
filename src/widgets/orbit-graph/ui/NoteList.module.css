@@ -1,0 +1,277 @@
+.noteList {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(147, 171, 227, 0.14);
+}
+
+.noteListHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: #7e8db0;
+  font:
+    10px 'NeoDunggeunmo Pro',
+    monospace;
+  transition: background 140ms ease;
+}
+
+.noteListHeader:hover,
+.noteListHeader:focus-within {
+  background: rgba(111, 142, 205, 0.12);
+}
+
+.filterTitle {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.noteListActions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.noteListCount {
+  min-width: 24px;
+  font-size: 14px;
+  text-align: right;
+}
+
+.noteListAddButton {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #d3e0fb;
+  cursor: pointer;
+  background: #1a263d;
+  font-size: 17px;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(3px);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease,
+    background 140ms ease;
+}
+
+.noteListHeader:hover .noteListAddButton,
+.noteListHeader:focus-within .noteListAddButton {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.noteListAddButton:hover {
+  border-color: rgba(158, 184, 243, 0.44);
+  background: #31466f;
+}
+
+.noteListItems {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.noteListRow {
+  display: flex;
+  max-height: 40px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 3px;
+  overflow: hidden;
+  padding-left: calc(var(--note-depth, 0) * 20px);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    max-height 220ms ease,
+    margin-bottom 220ms ease,
+    opacity 160ms ease,
+    transform 220ms ease;
+}
+
+.noteListRow.isCollapsed {
+  max-height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+}
+
+.noteListItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 34px;
+  padding: 2px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #aebbd8;
+  cursor: pointer;
+  background: transparent;
+  font:
+    13px 'NeoDunggeunmo Pro',
+    monospace;
+  text-align: left;
+}
+
+.noteListItem:hover,
+.noteListItem.active {
+  border-color: rgba(144, 167, 229, 0.32);
+  color: #f1f5ff;
+  background: rgba(111, 142, 205, 0.16);
+}
+
+.noteListItem.context {
+  color: #7483a5;
+}
+
+.noteSelectButton {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
+.noteListContent {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 16px;
+  padding: 5px 6px;
+  pointer-events: none;
+  transition: padding 140ms ease;
+}
+
+.noteListItem:hover .noteListContent,
+.noteListItem:focus-within .noteListContent {
+  padding-right: 64px;
+}
+
+.noteListContent > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noteListContent i {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 99px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.noteAddChildButton,
+.noteDeleteButton,
+.noteExpandButton {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  pointer-events: none;
+  background: #202941;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease,
+    background 140ms ease;
+}
+
+.noteAddChildButton {
+  right: 32px;
+  border: 1px solid rgba(147, 171, 227, 0.24);
+  color: #c8d6f6;
+  font:
+    20px/1 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.noteDeleteButton {
+  right: 3px;
+  display: grid;
+  border: 1px solid rgba(221, 135, 158, 0.24);
+  color: #d490a4;
+  place-items: center;
+}
+
+.noteExpandButton {
+  left: 4px;
+  width: 24px;
+  border: 1px solid rgba(147, 171, 227, 0.18);
+  color: #bdcbef;
+  font-size: 20px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.noteListItem:hover .noteAddChildButton,
+.noteAddChildButton:focus-visible,
+.noteListItem:hover .noteDeleteButton,
+.noteDeleteButton:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1);
+}
+
+.noteListItem:hover .noteExpandButton,
+.noteExpandButton:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.noteAddChildButton:hover,
+.noteExpandButton:hover {
+  border-color: rgba(164, 188, 246, 0.5);
+  color: #fff;
+  background: #34476f;
+}
+
+.noteDeleteButton:hover {
+  border-color: rgba(244, 154, 180, 0.54);
+  color: #ffd6e0;
+  background: rgba(139, 62, 85, 0.66);
+}
+
+.noteDeleteButton svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+@media (max-width: 720px) {
+  .noteList {
+    max-height: 330px;
+  }
+}

@@ -1,0 +1,151 @@
+.graphFilters {
+  display: grid;
+  gap: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 -4px;
+  color: #91a7df;
+  font:
+    22px 'NeoDunggeunmo Pro',
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.filterGroup {
+  display: grid;
+  gap: 7px;
+}
+
+.filterTitle {
+  color: #7e8db0;
+  font:
+    12px 'NeoDunggeunmo Pro',
+    monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filterGroup button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 32px;
+  padding: 7px 0 7px 2px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #aebbd8;
+  cursor: pointer;
+  background: transparent;
+  font:
+    13px 'NeoDunggeunmo Pro',
+    monospace;
+  text-align: left;
+}
+
+.filterGroup button:hover,
+.filterGroup button.active {
+  border-color: rgba(144, 167, 229, 0.32);
+  color: #f1f5ff;
+  background: rgba(111, 142, 205, 0.14);
+}
+
+.filterGroup button i {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.tagFilterList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-left: 2px;
+}
+
+.filterGroup .tagFilterList button {
+  width: auto;
+  min-height: 28px;
+  padding: 5px 9px;
+  border-color: rgba(147, 171, 227, 0.22);
+  border-radius: 999px;
+  background: rgba(111, 142, 205, 0.1);
+}
+
+.filterGroup .tagFilterList button:hover,
+.filterGroup .tagFilterList button.active {
+  border-color: rgba(157, 179, 239, 0.46);
+  background: rgba(111, 142, 205, 0.25);
+}
+
+.filterToggles label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #aebbd8;
+  font-size: 13px;
+}
+
+.connectionSwitch {
+  width: 100%;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.connectionSwitch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.connectionSwitchTrack {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(147, 171, 227, 0.34);
+  border-radius: 999px;
+  background: rgba(78, 94, 134, 0.36);
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.connectionSwitchTrack::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  content: '';
+  background: #9aa8c8;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.connectionSwitch input:checked + .connectionSwitchTrack {
+  border-color: rgba(164, 190, 255, 0.68);
+  background: rgba(102, 134, 218, 0.68);
+}
+
+.connectionSwitch input:checked + .connectionSwitchTrack::after {
+  transform: translateX(14px);
+  background: #eef4ff;
+}
+
+.connectionSwitch input:focus-visible + .connectionSwitchTrack {
+  box-shadow: 0 0 0 3px rgba(128, 161, 245, 0.25);
+}
+
+@media (max-width: 720px) {
+  .graphFilters {
+    gap: 14px;
+  }
+}

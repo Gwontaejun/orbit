@@ -1,0 +1,380 @@
+.richTextEditor {
+  display: flex;
+  min-height: 0;
+  height: 100%;
+  overflow: visible;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.editorToolbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid rgba(151, 175, 235, 0.16);
+  background: transparent;
+}
+
+.editorToolbar > .editorHeadingControl {
+  order: -2;
+}
+
+.editorToolbar > button:nth-child(1),
+.editorToolbar > button:nth-child(2) {
+  order: -1;
+}
+
+.editorToolbar button {
+  min-width: 30px;
+  min-height: 44px;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #adbedf;
+  cursor: pointer;
+  background: transparent;
+  font:
+    16px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.editorToolbar button:hover,
+.editorToolbar button.isActive {
+  border-color: rgba(151, 175, 235, 0.32);
+  color: #f1f5ff;
+  background: rgba(111, 142, 205, 0.22);
+}
+
+.editorToolbar button svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.editorToolbar button svg circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.editorToolbar button svg text {
+  fill: currentColor;
+  stroke: none;
+  font-family: 'NeoDunggeunmo Pro', monospace;
+  font-size: 5px;
+  font-weight: 600;
+}
+
+.codeBlockIcon {
+  color: currentColor;
+  font:
+    600 12px/1 'NeoDunggeunmo Pro',
+    monospace;
+  letter-spacing: -0.1em;
+}
+
+.editorToolbar .editorColorButton {
+  font:
+    600 13px/1 'NeoDunggeunmo Pro',
+    sans-serif;
+}
+
+.editorColorControl,
+.editorHeadingControl {
+  position: relative;
+}
+
+.editorColorButton span {
+  border-bottom: 2px solid currentColor;
+}
+
+.editorColorPalette {
+  position: absolute;
+  z-index: 4;
+  top: calc(100% + 8px);
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: max-content;
+  padding: 8px;
+  border: 1px solid rgba(151, 175, 235, 0.34);
+  border-radius: 7px;
+  background: #111a2b;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+}
+
+.editorToolbar .editorColorPalette button {
+  width: 19px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0;
+  border: 2px solid rgba(225, 234, 255, 0.28);
+  border-radius: 50%;
+  background: var(--editor-color);
+}
+
+.editorToolbar .editorColorPalette button:hover,
+.editorToolbar .editorColorPalette button.isSelected {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px rgba(126, 161, 239, 0.42);
+}
+
+.editorToolbar .editorColorPalette .editorColorReset {
+  width: auto;
+  min-width: 0;
+  height: auto;
+  padding: 3px 6px;
+  border: 0;
+  border-radius: 4px;
+  color: #9aacce;
+  background: transparent;
+  font:
+    9px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.editorHeadingPalette {
+  position: absolute;
+  z-index: 4;
+  top: calc(100% + 8px);
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  width: 190px;
+  padding: 8px;
+  border: 1px solid rgba(151, 175, 235, 0.34);
+  border-radius: 7px;
+  background: #111a2b;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+}
+
+.editorToolbar .editorHeadingPalette button {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 27px;
+  padding: 5px 7px;
+  border-color: transparent;
+  color: #c9d6f2;
+  font:
+    10px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.editorToolbar .editorHeadingPalette button:hover,
+.editorToolbar .editorHeadingPalette button.isSelected {
+  border-color: rgba(151, 175, 235, 0.32);
+  background: rgba(111, 142, 205, 0.22);
+}
+
+.headingPreview {
+  color: #edf3ff;
+  font-family: 'NeoDunggeunmo Pro', sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.headingPreview1 {
+  font-size: 22px;
+}
+
+.headingPreview2 {
+  font-size: 19px;
+}
+
+.headingPreview3 {
+  font-size: 17px;
+}
+
+.headingPreview4 {
+  font-size: 15px;
+}
+
+.headingPreview5 {
+  font-size: 13px;
+}
+
+.headingPreview6 {
+  font-size: 11px;
+}
+
+.headingLevelLabel {
+  color: #7789b1;
+  font:
+    9px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.editorToolbar .editorHeadingPalette .editorHeadingReset {
+  grid-column: 1 / -1;
+}
+
+.richTextEditor > div:last-child {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+
+.richTextContent {
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  flex: 1;
+  overflow: auto;
+  padding: 16px 0;
+  outline: none;
+  color: #e4ebfb;
+  caret-color: #b8ccff;
+  cursor: text;
+  font:
+    13px/1.7 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.richTextContent > :first-child {
+  margin-top: 0;
+}
+
+.richTextContent > :last-child {
+  margin-bottom: 0;
+}
+
+.richTextContent h1,
+.richTextContent h2,
+.richTextContent h3,
+.richTextContent h4,
+.richTextContent h5,
+.richTextContent h6 {
+  color: #f4f7ff;
+  line-height: 1.25;
+}
+
+.richTextContent h1 {
+  font-size: 1.7em;
+}
+.richTextContent h2 {
+  font-size: 1.45em;
+}
+.richTextContent h3 {
+  font-size: 1.25em;
+}
+.richTextContent h4 {
+  font-size: 1.12em;
+}
+.richTextContent h5 {
+  font-size: 1em;
+}
+.richTextContent h6 {
+  font-size: 0.88em;
+}
+
+.richTextContent ul,
+.richTextContent ol {
+  padding-left: 1.7em;
+}
+
+.richTextContent blockquote {
+  margin-left: 0;
+  padding-left: 12px;
+  border-left: 2px solid #8ba8ff;
+  color: #b8c4dc;
+}
+
+.richTextContent pre {
+  overflow: auto;
+  padding: 10px;
+  border-radius: 5px;
+  background: #070b15;
+}
+
+.richTextContent code {
+  color: #b9d5ff;
+}
+
+.richTextContent a {
+  color: #99bfff;
+  text-decoration: underline;
+}
+
+.richTextContent ul[data-type='taskList'] {
+  padding-left: 0;
+  list-style: none;
+}
+
+.richTextContent ul[data-type='taskList'] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.richTextContent ul[data-type='taskList'] li > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.richTextContent ul[data-type='taskList'] li > div > p {
+  margin: 0;
+}
+
+.richTextContent ul[data-type='taskList'] label {
+  display: flex;
+  flex: 0 0 17px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0 0;
+  cursor: pointer;
+}
+
+.richTextContent ul[data-type='taskList'] input[type='checkbox'] {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  border: 1px solid rgba(165, 190, 244, 0.58);
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(12, 19, 34, 0.8);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.richTextContent ul[data-type='taskList'] input[type='checkbox']:hover {
+  border-color: #a8c0ff;
+  background: rgba(83, 112, 182, 0.24);
+}
+
+.richTextContent ul[data-type='taskList'] input[type='checkbox']:checked {
+  border-color: #91adff;
+  background-color: #6f8fe2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3.1 8.1 3 3 6.8-6.5' fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2'/%3E%3C/svg%3E");
+  box-shadow: 0 0 10px rgba(120, 153, 238, 0.36);
+}
+
+.richTextContent ul[data-type='taskList'] li[data-checked='true'] > div {
+  color: #8291af;
+  text-decoration: line-through;
+  text-decoration-color: rgba(139, 161, 207, 0.58);
+}
+
+.richTextContent :global(.is-editor-empty):first-child::before {
+  float: left;
+  height: 0;
+  color: #677594;
+  pointer-events: none;
+  content: attr(data-placeholder);
+}

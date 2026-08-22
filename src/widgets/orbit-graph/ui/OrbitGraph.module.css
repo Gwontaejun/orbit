@@ -1,0 +1,372 @@
+.graphCanvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.graphCanvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.graphLayoutControls {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgba(151, 175, 235, 0.3);
+  border-radius: 8px;
+  background: rgba(7, 11, 23, 0.82);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.graphLayoutControls button {
+  padding: 10px 12px;
+  border: 0;
+  border-right: 1px solid rgba(151, 175, 235, 0.18);
+  color: #9eaccb;
+  cursor: pointer;
+  background: transparent;
+  font:
+    11px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.graphLayoutControls button:last-child {
+  border-right: 0;
+}
+
+.graphLayoutControls button:hover {
+  color: #eff4ff;
+  background: rgba(116, 145, 211, 0.14);
+}
+
+.graphLayoutControls button.active {
+  color: #f4f7ff;
+  background: rgba(111, 142, 231, 0.28);
+}
+
+.graphZoomControls {
+  position: absolute;
+  right: 18px;
+  bottom: 66px;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 54px;
+  padding: 9px 7px 10px;
+  border: 1px solid rgba(151, 175, 235, 0.3);
+  border-radius: 8px;
+  background: rgba(7, 11, 23, 0.82);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.zoomControlHeader,
+.zoomControlSlider {
+  display: flex;
+  align-items: center;
+}
+
+.zoomControlHeader {
+  flex-direction: column;
+  gap: 2px;
+  color: #7f91ba;
+  font:
+    9px 'NeoDunggeunmo Pro',
+    monospace;
+  letter-spacing: 0.08em;
+}
+
+.zoomControlHeader output {
+  min-width: 0;
+  color: #d7e3ff;
+  font-size: 11px;
+  text-align: center;
+}
+
+.graphZoomControls .zoomResetButton {
+  width: 21px;
+  height: 21px;
+  border: 0;
+  border-radius: 50%;
+  color: #9db5ed;
+  background: transparent;
+  font-size: 16px;
+}
+
+.graphZoomControls .zoomResetButton:hover {
+  color: #f4f7ff;
+  background: rgba(111, 142, 205, 0.28);
+}
+
+.zoomControlSlider {
+  flex-direction: column;
+  gap: 7px;
+}
+
+.graphZoomControls button {
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 1px solid rgba(151, 175, 235, 0.24);
+  border-radius: 7px;
+  color: #c4d0ed;
+  cursor: pointer;
+  background: rgba(111, 142, 205, 0.1);
+  font:
+    14px/1 system-ui,
+    sans-serif;
+}
+
+.graphZoomControls button:hover {
+  color: #fff;
+  background: rgba(111, 142, 205, 0.28);
+}
+
+.zoomRange {
+  --zoom-progress: 50%;
+  position: relative;
+  width: 20px;
+  height: 106px;
+  cursor: pointer;
+  outline: 0;
+}
+
+.zoomRangeTrack {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 8px;
+  width: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(123, 148, 208, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(178, 199, 255, 0.1);
+}
+
+.zoomRangeFill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--zoom-progress);
+  border-radius: inherit;
+  background: linear-gradient(to top, #6687df, #9db9ff);
+  box-shadow: 0 0 9px rgba(126, 156, 240, 0.8);
+}
+
+.zoomRangeThumb {
+  position: absolute;
+  z-index: 1;
+  bottom: var(--zoom-progress);
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #8caeff;
+  box-shadow:
+    0 0 0 3px rgba(116, 151, 241, 0.18),
+    0 0 12px #6e94f2;
+  transform: translateY(50%);
+}
+
+.zoomRange:focus-visible .zoomRangeThumb {
+  box-shadow:
+    0 0 0 3px rgba(116, 151, 241, 0.28),
+    0 0 0 5px rgba(220, 232, 255, 0.45),
+    0 0 14px #6e94f2;
+}
+
+.nodeLabel {
+  display: inline-block;
+  padding: 7px 11px;
+  border: 1px solid rgba(184, 202, 249, 0.48);
+  border-radius: 7px;
+  color: #f3f6ff;
+  white-space: nowrap;
+  background: rgba(5, 8, 17, 0.86);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.42);
+  font:
+    600 14px 'NeoDunggeunmo Pro',
+    monospace;
+  transform: translateY(-25px);
+}
+
+.nodeNotePopover {
+  display: grid;
+  min-width: 156px;
+  gap: 9px;
+  padding: 11px;
+  border: 1px solid rgba(184, 202, 249, 0.5);
+  border-radius: 8px;
+  color: #f3f6ff;
+  background: rgba(8, 13, 27, 0.96);
+  box-shadow: 0 9px 28px rgba(0, 0, 0, 0.46);
+  font:
+    12px 'NeoDunggeunmo Pro',
+    monospace;
+  text-align: center;
+  transform: translateY(-38px);
+}
+
+.nodeNoteTitle {
+  color: #f3f6ff;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.nodeNoteMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.nodeNoteCategory,
+.nodeNoteTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  color: #aebfdf;
+  background: rgba(111, 142, 205, 0.14);
+  font-size: 9px;
+}
+
+.nodeNoteCategory i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px currentColor;
+}
+
+.nodeNoteTag {
+  color: #c4b5ed;
+}
+
+.nodeNotePopover button {
+  padding: 6px 8px;
+  border: 1px solid rgba(151, 175, 235, 0.36);
+  border-radius: 5px;
+  color: #101a2e;
+  cursor: pointer;
+  background: #b7cdfd;
+  font:
+    10px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.nodeNotePopover button:hover {
+  background: #d5e2ff;
+}
+
+.emptyOrbitOverlay,
+.graphLoadingOverlay {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.emptyOrbitOverlay {
+  pointer-events: auto;
+  background: rgba(5, 8, 17, 0.38);
+  backdrop-filter: blur(1.5px);
+}
+
+.graphLoadingOverlay {
+  color: #b8c9ee;
+  background: rgba(5, 8, 17, 0.32);
+  font:
+    11px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.emptyOrbit {
+  display: grid;
+  min-width: 250px;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid rgba(146, 170, 229, 0.28);
+  border-radius: 10px;
+  color: #dce7ff;
+  background: rgba(8, 12, 25, 0.18);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+  font:
+    12px 'NeoDunggeunmo Pro',
+    monospace;
+  text-align: center;
+}
+
+.emptyOrbit span {
+  color: #8ea0c6;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.emptyOrbit button {
+  justify-self: center;
+  padding: 8px 11px;
+  border: 1px solid rgba(151, 175, 235, 0.4);
+  border-radius: 6px;
+  color: #f1f5ff;
+  cursor: pointer;
+  background: rgba(97, 127, 202, 0.36);
+  font:
+    10px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.emptyOrbit button:hover {
+  background: rgba(111, 142, 205, 0.58);
+}
+
+.graphErrorOverlay {
+  background: rgba(26, 8, 15, 0.46);
+}
+
+@media (max-width: 720px) {
+  .graphCanvas {
+    grid-area: graph;
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 560px) {
+  .graphCanvas {
+    min-height: 420px;
+  }
+
+  .graphLayoutControls {
+    right: 8px;
+    bottom: 8px;
+    max-width: calc(100% - 16px);
+    overflow-x: auto;
+  }
+
+  .graphLayoutControls button {
+    flex: 0 0 auto;
+    padding: 9px 10px;
+    font-size: 10px;
+  }
+
+  .graphZoomControls {
+    right: 8px;
+    bottom: 58px;
+  }
+
+  .emptyOrbit {
+    min-width: min(250px, 78vw);
+  }
+}
