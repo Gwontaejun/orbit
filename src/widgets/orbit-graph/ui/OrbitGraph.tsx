@@ -40,8 +40,89 @@ import type {
   GraphFilter,
   GraphModel,
   GraphNode,
+  GraphPosition,
 } from '../../../entities/note/model/graph-types';
 import styles from './OrbitGraph.module.css';
+
+type GraphCluster = {
+  id: string;
+  name: string;
+  count: number;
+  color: string;
+  center: GraphPosition;
+  radius: number;
+  memberTargets: Array<{ id: string; position: GraphPosition }>;
+};
+
+const tagClusterColors = ['#7fa8ff', '#d892ff', '#66dbc3', '#ffc77a'];
+
+function buildClusters({
+  nodes,
+  layoutMode,
+  categoryById,
+  tagById,
+}: {
+  nodes: GraphNode[];
+  layoutMode: GraphLayoutMode;
+  categoryById: Map<string, { id: string; name: string; color: string }>;
+  tagById: Map<string, { id: string; name: string }>;
+}): GraphCluster[] {
+  const groups = new Map<string, GraphNode[]>();
+
+  for (const node of nodes) {
+    const groupId =
+      layoutMode === 'category'
+        ? node.categoryId
+        : layoutMode === 'tag'
+          ? node.tagIds[0]
+          : undefined;
+    if (!groupId) continue;
+    groups.set(groupId, [...(groups.get(groupId) ?? []), node]);
+  }
+
+  return [...groups.entries()].flatMap(([id, groupNodes], index) => {
+    const center = groupNodes.reduce<GraphPosition>(
+      (sum, node) => ({
+        x: sum.x + node.position.x / groupNodes.length,
+        y: sum.y + node.position.y / groupNodes.length,
+        z: sum.z + node.position.z / groupNodes.length,
+      }),
+      { x: 0, y: 0, z: 0 },
+    );
+    const radius = Math.max(
+      4.2,
+      ...groupNodes.map(
+        (node) =>
+          Math.hypot(
+            node.position.x - center.x,
+            node.position.y - center.y,
+            node.position.z - center.z,
+          ) + 3.4,
+      ),
+    );
+    const category = categoryById.get(id);
+    const tag = tagById.get(id);
+
+    return category || tag
+      ? [
+          {
+            id,
+            name: category?.name ?? `#${tag?.name ?? 'Tag'}`,
+            count: groupNodes.length,
+            color:
+              category?.color ??
+              tagClusterColors[index % tagClusterColors.length],
+            center,
+            radius,
+            memberTargets: groupNodes.map(({ id, position }) => ({
+              id,
+              position,
+            })),
+          },
+        ]
+      : [];
+  });
+}
 
 function EdgeLayer({
   edges,
@@ -443,11 +524,14 @@ function CameraDirector({
 }
 
 let sharedNodeGlowTexture: THREE.CanvasTexture | null = null;
+let sharedClusterAuraTexture: THREE.CanvasTexture | null = null;
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     sharedNodeGlowTexture?.dispose();
+    sharedClusterAuraTexture?.dispose();
     sharedNodeGlowTexture = null;
+    sharedClusterAuraTexture = null;
   });
 }
 
@@ -466,6 +550,23 @@ function getNodeGlowTexture() {
   context.fillRect(0, 0, 128, 128);
   sharedNodeGlowTexture = new THREE.CanvasTexture(canvas);
   return sharedNodeGlowTexture;
+}
+
+function getClusterAuraTexture() {
+  if (sharedClusterAuraTexture) return sharedClusterAuraTexture;
+  const canvas = document.createElement('canvas');
+  canvas.width = 256;
+  canvas.height = 256;
+  const context = canvas.getContext('2d')!;
+  const gradient = context.createRadialGradient(128, 128, 10, 128, 128, 128);
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 0.34)');
+  gradient.addColorStop(0.42, 'rgba(255, 255, 255, 0.16)');
+  gradient.addColorStop(0.72, 'rgba(255, 255, 255, 0.045)');
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, 256, 256);
+  sharedClusterAuraTexture = new THREE.CanvasTexture(canvas);
+  return sharedClusterAuraTexture;
 }
 
 function NodeGlow({
@@ -508,6 +609,7 @@ function Node({
   positionsRef,
   onOpenNote,
   categoryName,
+  categoryColor,
   tagNames,
 }: {
   node: GraphNode;
@@ -518,6 +620,7 @@ function Node({
   positionsRef: MutableRefObject<Map<string, THREE.Vector3>>;
   onOpenNote: (noteId: string) => void;
   categoryName: string;
+  categoryColor: string;
   tagNames: string[];
 }) {
   const { selectedNoteId, hoveredNoteId, selectNote, hoverNote } =
@@ -639,7 +742,7 @@ function Node({
             <strong className={styles.nodeNoteTitle}>{node.title}</strong>
             <div className={styles.nodeNoteMeta}>
               <span className={styles.nodeNoteCategory}>
-                <i style={{ backgroundColor: node.color }} />
+                <i style={{ backgroundColor: categoryColor }} />
                 {categoryName}
               </span>
               {tagNames.map((tagName) => (
@@ -669,7 +772,152 @@ function Node({
   );
 }
 
-function GraphScene({ onOpenNote }: { onOpenNote: (noteId: string) => void }) {
+function ClusterLegend({
+  clusters,
+  layoutMode,
+}: {
+  clusters: GraphCluster[];
+  layoutMode: GraphLayoutMode;
+}) {
+  if (clusters.length === 0) return null;
+
+  return (
+    <aside className={styles.clusterLegend} aria-label="Cluster guide">
+      <div className={styles.clusterLegendHeading}>
+        <span className={styles.clusterLegendTitle}>Cluster areas</span>
+        <small>{layoutMode === 'category' ? 'By category' : 'By tag'}</small>
+      </div>
+      <div className={styles.clusterLegendItems}>
+        {clusters.map((cluster) => (
+          <div key={cluster.id} className={styles.clusterLegendItem}>
+            <i
+              className={styles.clusterLegendAura}
+              style={{ '--cluster-color': cluster.color } as CSSProperties}
+            />
+            <span>{cluster.name}</span>
+            <small>({cluster.count})</small>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
+function ClusterAura({
+  cluster,
+  positionsRef,
+}: {
+  cluster: GraphCluster;
+  positionsRef: MutableRefObject<Map<string, THREE.Vector3>>;
+}) {
+  const spriteRef = useRef<THREE.Sprite>(null);
+  const opacityRef = useRef(0);
+
+  useLayoutEffect(() => {
+    const sprite = spriteRef.current;
+    if (!sprite) return;
+    const positions = cluster.memberTargets.flatMap(({ id }) => {
+      const position = positionsRef.current.get(id);
+      return position ? [position] : [];
+    });
+    if (positions.length === 0) return;
+
+    const center = positions.reduce(
+      (sum, position) => sum.add(position),
+      new THREE.Vector3(),
+    );
+    center.divideScalar(positions.length);
+    const radius = Math.max(
+      4.2,
+      ...positions.map((position) => position.distanceTo(center) + 3.4),
+    );
+    sprite.position.copy(center);
+    sprite.scale.set(radius * 2, radius * 2, 1);
+    (sprite.material as THREE.SpriteMaterial).opacity = 0;
+  }, [cluster.memberTargets, positionsRef]);
+
+  useFrame((_, delta) => {
+    const sprite = spriteRef.current;
+    if (!sprite) return;
+    const positions = cluster.memberTargets.flatMap(({ id, position }) => {
+      const current = positionsRef.current.get(id);
+      return current ? [{ current, target: position }] : [];
+    });
+    if (positions.length === 0) return;
+
+    const center = positions.reduce(
+      (sum, { current }) => sum.add(current),
+      new THREE.Vector3(),
+    );
+    center.divideScalar(positions.length);
+    const radius = Math.max(
+      4.2,
+      ...positions.map(({ current }) => current.distanceTo(center) + 3.4),
+    );
+    const averageDistanceToTarget =
+      positions.reduce(
+        (sum, { current, target }) => sum + current.distanceTo(target),
+        0,
+      ) / positions.length;
+    const settled =
+      1 - THREE.MathUtils.clamp(averageDistanceToTarget / 6, 0, 1);
+    const targetOpacity =
+      0.34 * THREE.MathUtils.smoothstep(settled, 0.42, 0.96);
+
+    sprite.position.copy(center);
+    sprite.scale.set(radius * 2, radius * 2, 1);
+    opacityRef.current = THREE.MathUtils.damp(
+      opacityRef.current,
+      targetOpacity,
+      5,
+      delta,
+    );
+    (sprite.material as THREE.SpriteMaterial).opacity = opacityRef.current;
+  });
+
+  return (
+    <sprite
+      ref={spriteRef}
+      position={[cluster.center.x, cluster.center.y, cluster.center.z]}
+      scale={[cluster.radius * 2, cluster.radius * 2, 1]}
+      renderOrder={-3}
+    >
+      <spriteMaterial
+        map={getClusterAuraTexture()}
+        color={cluster.color}
+        transparent
+        opacity={0.34}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        toneMapped={false}
+      />
+    </sprite>
+  );
+}
+
+function ClusterAuras({
+  clusters,
+  positionsRef,
+}: {
+  clusters: GraphCluster[];
+  positionsRef: MutableRefObject<Map<string, THREE.Vector3>>;
+}) {
+  return clusters.map((cluster) => (
+    <ClusterAura
+      key={cluster.id}
+      cluster={cluster}
+      positionsRef={positionsRef}
+    />
+  ));
+}
+
+function GraphScene({
+  onOpenNote,
+  onClustersChange,
+}: {
+  onOpenNote: (noteId: string) => void;
+  onClustersChange: (clusters: GraphCluster[]) => void;
+}) {
   const { categories, notes, relations, tags } = useWorkspaceData();
   const layoutMode = useGraphStore((state) => state.layoutMode);
   const selectedCategoryIds = useGraphStore(
@@ -747,6 +995,30 @@ function GraphScene({ onOpenNote }: { onOpenNote: (noteId: string) => void }) {
     () => new Map(tags.map((tag) => [tag.id, tag])),
     [tags],
   );
+  const clusterNodes = useMemo(
+    () =>
+      activeFilter
+        ? graph.nodes.filter((node) => matchingNoteIds.has(node.id))
+        : graph.nodes,
+    [activeFilter, graph.nodes, matchingNoteIds],
+  );
+  const clusters = useMemo(
+    () =>
+      layoutMode === 'category' || layoutMode === 'tag'
+        ? buildClusters({
+            nodes: clusterNodes,
+            layoutMode,
+            categoryById,
+            tagById,
+          })
+        : [],
+    [categoryById, clusterNodes, layoutMode, tagById],
+  );
+
+  useEffect(() => {
+    onClustersChange(clusters);
+  }, [clusters, onClustersChange]);
+
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const positionsRef = useRef(new Map<string, THREE.Vector3>());
   const isDocumentVisible = useDocumentVisibility();
@@ -852,6 +1124,7 @@ function GraphScene({ onOpenNote }: { onOpenNote: (noteId: string) => void }) {
         resetVersion={resetVersion}
         controlsRef={controlsRef}
       />
+      <ClusterAuras clusters={clusters} positionsRef={positionsRef} />
       {hierarchyEdges.length > 0 && (
         <>
           <EdgeLayer
@@ -881,6 +1154,7 @@ function GraphScene({ onOpenNote }: { onOpenNote: (noteId: string) => void }) {
           categoryName={
             categoryById.get(node.categoryId)?.name ?? 'Uncategorized'
           }
+          categoryColor={categoryById.get(node.categoryId)?.color ?? node.color}
           tagNames={node.tagIds.flatMap((tagId) => {
             const tag = tagById.get(tagId);
             return tag ? [tag.name] : [];
@@ -925,6 +1199,7 @@ export function OrbitGraph({
   onOpenNote: (noteId: string) => void;
 }) {
   const { error, isLoading, notes, reload } = useWorkspaceData();
+  const [clusters, setClusters] = useState<GraphCluster[]>([]);
   const layoutMode = useGraphStore((state) => state.layoutMode);
   const setLayoutMode = useGraphStore((state) => state.setLayoutMode);
   const cameraDistance = useGraphStore((state) => state.cameraDistance);
@@ -967,7 +1242,8 @@ export function OrbitGraph({
 
   return (
     <div className={styles.graphCanvas}>
-      <GraphScene onOpenNote={onOpenNote} />
+      <GraphScene onOpenNote={onOpenNote} onClustersChange={setClusters} />
+      <ClusterLegend clusters={clusters} layoutMode={layoutMode} />
       {isLoading && (
         <div className={styles.graphLoadingOverlay} aria-live="polite">
           <div>Loading your Orbit...</div>

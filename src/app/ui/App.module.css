@@ -54,6 +54,90 @@
   background: rgba(11, 16, 30, 0.62);
 }
 
+.loginPromptBackdrop {
+  position: fixed;
+  z-index: 2147483647;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(3, 6, 14, 0.48);
+  backdrop-filter: blur(5px);
+}
+
+.loginPrompt {
+  display: grid;
+  width: min(390px, 100%);
+  gap: 13px;
+  padding: 26px;
+  border: 1px solid rgba(151, 175, 235, 0.3);
+  border-radius: 14px;
+  color: #e9efff;
+  background: linear-gradient(
+    145deg,
+    rgba(22, 34, 66, 0.97),
+    rgba(8, 13, 28, 0.98)
+  );
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  font-family: 'NeoDunggeunmo Pro', monospace;
+}
+
+.loginPromptEyebrow {
+  color: #8298cc;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.loginPrompt h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.loginPrompt p,
+.loginPrompt small {
+  margin: 0;
+  color: #9aaacf;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.loginPrompt small {
+  color: #ffb4c0;
+}
+
+.loginPromptActions {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.loginPromptActions button {
+  padding: 9px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+  font:
+    12px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.loginPromptDismiss {
+  border: 1px solid rgba(151, 175, 235, 0.24);
+  color: #aebde0;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.loginPromptSignIn {
+  border: 1px solid rgba(160, 188, 255, 0.56);
+  color: #f5f8ff;
+  background: rgba(102, 137, 224, 0.48);
+}
+
+.loginPromptActions button:hover {
+  filter: brightness(1.16);
+}
+
 @media (max-width: 720px) {
   .orbitApp {
     min-height: 100dvh;

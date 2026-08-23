@@ -48,7 +48,7 @@ export function AuthControls() {
           });
         }}
       >
-        Continue with Google
+        Sign in with Google
       </button>
       {error && <span className={styles.authError}>{error}</span>}
     </div>

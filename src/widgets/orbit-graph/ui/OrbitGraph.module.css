@@ -270,6 +270,87 @@
   background: #d5e2ff;
 }
 
+.clusterLegend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 4;
+  display: grid;
+  gap: 12px;
+  min-width: 190px;
+  padding: 16px;
+  border: 1px solid rgba(151, 175, 235, 0.22);
+  border-radius: 8px;
+  color: #dce7ff;
+  background: rgba(7, 11, 23, 0.72);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  font:
+    14px 'NeoDunggeunmo Pro',
+    monospace;
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+}
+
+.clusterLegendTitle {
+  color: #8193bd;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.clusterLegendHeading {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.clusterLegendHeading small {
+  color: #667aa8;
+  font-size: 10px;
+}
+
+.clusterLegendItems {
+  display: grid;
+  gap: 9px;
+}
+
+.clusterLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.clusterLegendAura {
+  width: 22px;
+  height: 14px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--cluster-color) 62%, transparent) 0%,
+      color-mix(in srgb, var(--cluster-color) 23%, transparent) 48%,
+      transparent 76%
+    ),
+    rgba(255, 255, 255, 0.02);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cluster-color) 42%, transparent);
+}
+
+.clusterLegendItem span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clusterLegendItem small {
+  margin-left: auto;
+  color: #8d9fca;
+  font: inherit;
+  font-size: 11px;
+}
+
 .emptyOrbitOverlay,
 .graphLoadingOverlay {
   position: absolute;
@@ -346,6 +427,14 @@
 @media (max-width: 560px) {
   .graphCanvas {
     min-height: 420px;
+  }
+
+  .clusterLegend {
+    top: 8px;
+    right: 8px;
+    min-width: 156px;
+    padding: 12px;
+    font-size: 12px;
   }
 
   .graphLayoutControls {
