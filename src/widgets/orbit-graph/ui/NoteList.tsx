@@ -1,16 +1,14 @@
 import { useMemo, type CSSProperties } from 'react';
-import { useWorkspaceData } from '../../../features/workspace/model/workspace-provider';
-import {
-  filterNoteIds,
-  hasActiveGraphFilter,
-} from '../../../entities/note/model/filter-notes';
+import { useWorkspaceData } from '@/entities/workspace';
 import {
   buildNoteHierarchy,
+  filterNoteIds,
+  hasActiveGraphFilter,
   includeParentContext,
-} from '../../../entities/note/model/note-hierarchy';
-import type { GraphFilter } from '../../../entities/note/model/graph-types';
-import type { Note } from '../../../entities/note/model/types';
-import { useGraphStore } from '../model/store';
+  type GraphFilter,
+  type Note,
+} from '@/entities/note';
+import { useGraphStore } from '../model/graph-store';
 import styles from './NoteList.module.css';
 
 type NoteListProps = {

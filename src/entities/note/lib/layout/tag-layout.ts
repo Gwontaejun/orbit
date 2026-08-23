@@ -1,7 +1,4 @@
-import type {
-  GraphModel,
-  GraphPosition,
-} from '../../../entities/note/model/graph-types';
+import type { GraphModel, GraphPosition } from '../../model/graph-types';
 
 /** Places notes sharing a tag near the same spatial cluster. */
 export function calculateTagLayout(

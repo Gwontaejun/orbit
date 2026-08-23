@@ -1,7 +1,7 @@
-import type { Category, Note, NoteRelation, Tag } from '../model/types';
-import { supabase } from '../../../shared/lib/supabase/client';
+import type { Category, Note, NoteRelation, Tag } from '@/entities/note';
+import type { Workspace } from '../model/types';
+import { supabase } from '@/shared/api/supabase/client';
 
-export type Workspace = { id: string; name: string };
 export type WorkspaceGraphData = {
   workspace: Workspace;
   notes: Note[];

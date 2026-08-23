@@ -1,5 +1,5 @@
-import { useWorkspaceData } from '../../../features/workspace/model/workspace-provider';
-import { useGraphStore } from '../model/store';
+import { useWorkspaceData } from '@/entities/workspace';
+import { useGraphStore } from '../model/graph-store';
 import styles from './GraphFilters.module.css';
 
 export function GraphFilters() {

@@ -5,10 +5,7 @@ import {
   forceManyBody,
   forceSimulation,
 } from 'd3-force-3d';
-import type {
-  GraphModel,
-  GraphPosition,
-} from '../../../entities/note/model/graph-types';
+import type { GraphModel, GraphPosition } from '../../model/graph-types';
 
 type SimulationNode = {
   id: string;

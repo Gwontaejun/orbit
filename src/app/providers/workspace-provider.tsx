@@ -1,62 +1,35 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
   type PropsWithChildren,
 } from 'react';
 import {
-  loadWorkspaceGraph,
-  type Workspace,
-} from '../../../entities/note/api/notes-repository';
+  mockCategories,
+  mockNotes,
+  mockRelations,
+  mockTags,
+  type Note,
+} from '@/entities/note';
 import {
-  categories as mockCategories,
-  notes as mockNotes,
-  relations as mockRelations,
-  tags as mockTags,
-} from '../../../entities/note/model/mock-data';
-import type {
-  Category,
-  Note,
-  NoteRelation,
-  Tag,
-} from '../../../entities/note/model/types';
-import { useAuth } from '../../auth/model/use-auth';
+  loadWorkspaceGraph,
+  WorkspaceContext,
+  type DemoNoteInput,
+  type WorkspaceContextValue,
+  type WorkspaceData,
+} from '@/entities/workspace';
+import type { Workspace } from '@/entities/workspace';
+import { useAuth } from '@/features/auth';
 
-type OrbitData = {
-  notes: Note[];
-  categories: Category[];
-  tags: Tag[];
-  relations: NoteRelation[];
-};
-export type DemoNoteInput = {
-  id?: string;
-  title: string;
-  content: string;
-  categoryName: string;
-  parentNoteId: string | null;
-  tagIds: string[];
-  newTagNames: string[];
-};
-type WorkspaceContextValue = OrbitData & {
-  workspace: Workspace | null;
-  isDemo: boolean;
-  isLoading: boolean;
-  error: string | null;
-  reload: () => Promise<void>;
-  saveDemoNote: (input: DemoNoteInput) => Promise<void>;
-  deleteDemoNote: (noteId: string) => Promise<void>;
-};
-const demoData: OrbitData = {
+const demoData: WorkspaceData = {
   notes: mockNotes,
   categories: mockCategories,
   tags: mockTags,
   relations: mockRelations,
 };
-const emptyData: OrbitData = {
+const emptyData: WorkspaceData = {
   notes: [],
   categories: [],
   tags: [],
@@ -71,12 +44,10 @@ const colorForCategory = (name: string) =>
     [...name].reduce((total, character) => total + character.charCodeAt(0), 0) %
       categoryPalette.length
   ];
-const WorkspaceContext = createContext<WorkspaceContextValue | null>(null);
-
 export function WorkspaceProvider({ children }: PropsWithChildren) {
   const { isConfigured, isLoading: isAuthLoading, user } = useAuth();
   const userId = user?.id ?? null;
-  const [data, setData] = useState<OrbitData>(demoData);
+  const [data, setData] = useState<WorkspaceData>(demoData);
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadedUserId, setLoadedUserId] = useState<string | null>(null);
@@ -251,12 +222,4 @@ export function WorkspaceProvider({ children }: PropsWithChildren) {
       {children}
     </WorkspaceContext.Provider>
   );
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function useWorkspaceData() {
-  const context = useContext(WorkspaceContext);
-  if (!context)
-    throw new Error('useWorkspaceData must be used within WorkspaceProvider');
-  return context;
 }

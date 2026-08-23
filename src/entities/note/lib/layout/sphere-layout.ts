@@ -1,7 +1,4 @@
-import type {
-  GraphModel,
-  GraphPosition,
-} from '../../../entities/note/model/graph-types';
+import type { GraphModel, GraphPosition } from '../../model/graph-types';
 
 /** Covers a sphere evenly without using note relationships. */
 export function calculateSphereLayout(

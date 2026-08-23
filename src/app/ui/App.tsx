@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { AuthControls } from '@/features/auth/ui/AuthControls';
-import { useAuth } from '@/features/auth/model/use-auth';
-import { NoteEditor } from '@/features/note-editor/ui/NoteEditor';
-import { useWorkspaceData } from '@/features/workspace/model/workspace-provider';
-import { deleteNote } from '@/entities/note/api/notes-repository';
-import type { Note } from '@/entities/note/model/types';
-import { useGraphStore } from '@/widgets/orbit-graph/model/store';
-import { GraphFilters } from '@/widgets/orbit-graph/ui/GraphFilters';
-import { NoteList } from '@/widgets/orbit-graph/ui/NoteList';
-import { OrbitGraph } from '@/widgets/orbit-graph/ui/OrbitGraph';
+import { AuthControls, useAuth } from '@/features/auth';
+import { NoteEditor } from '@/features/note-editor';
+import type { Note } from '@/entities/note';
+import { deleteNote, useWorkspaceData } from '@/entities/workspace';
+import {
+  GraphFilters,
+  NoteList,
+  OrbitGraph,
+  useGraphStore,
+} from '@/widgets/orbit-graph';
 import styles from './App.module.css';
 
 export function App() {

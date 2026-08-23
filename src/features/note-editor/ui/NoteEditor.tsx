@@ -1,13 +1,8 @@
 import { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import type { StylesConfig } from 'react-select';
-import {
-  deleteNote,
-  saveNote,
-} from '../../../entities/note/api/notes-repository';
-import type { Note } from '../../../entities/note/model/types';
-import { useAuth } from '../../auth/model/use-auth';
-import { useWorkspaceData } from '../../workspace/model/workspace-provider';
+import type { Note } from '@/entities/note';
+import { deleteNote, saveNote, useWorkspaceData } from '@/entities/workspace';
 import { RichTextEditor } from './RichTextEditor';
 import styles from './NoteEditor.module.css';
 
@@ -90,7 +85,6 @@ const categorySelectStyles: StylesConfig<CategoryOption, false> = {
 };
 
 export function NoteEditor({ note, initialParentNoteId, onClose }: Props) {
-  const { user } = useAuth();
   const {
     workspace,
     isDemo,
@@ -165,7 +159,7 @@ export function NoteEditor({ note, initialParentNoteId, onClose }: Props) {
           newTagNames,
         });
       } else {
-        if (!workspace || !user) return;
+        if (!workspace) return;
         await saveNote({
           id: note?.id,
           workspaceId: workspace.id,
@@ -219,7 +213,7 @@ export function NoteEditor({ note, initialParentNoteId, onClose }: Props) {
         aria-label={note ? 'Edit note' : 'New note'}
         onMouseDown={(event) => event.stopPropagation()}
       >
-        {!isDemo && (!user || !workspace) ? (
+        {!isDemo && !workspace ? (
           <p>Sign in to create and edit notes.</p>
         ) : (
           <>

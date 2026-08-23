@@ -1,9 +1,6 @@
 import { useEffect, useMemo, useState, type PropsWithChildren } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import {
-  isSupabaseConfigured,
-  supabase,
-} from '../../../shared/lib/supabase/client';
+import { isSupabaseConfigured, supabase } from '@/shared/api/supabase/client';
 import { AuthContext, type AuthContextValue } from './auth-context';
 
 export function AuthProvider({ children }: PropsWithChildren) {

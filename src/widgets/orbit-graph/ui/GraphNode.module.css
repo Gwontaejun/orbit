@@ -1,0 +1,83 @@
+.label {
+  display: inline-block;
+  padding: 7px 11px;
+  border: 1px solid rgba(184, 202, 249, 0.48);
+  border-radius: 7px;
+  color: #f3f6ff;
+  white-space: nowrap;
+  background: rgba(5, 8, 17, 0.86);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.42);
+  font:
+    600 14px 'NeoDunggeunmo Pro',
+    monospace;
+  transform: translateY(-25px);
+}
+
+.notePopover {
+  display: grid;
+  min-width: 156px;
+  gap: 9px;
+  padding: 11px;
+  border: 1px solid rgba(184, 202, 249, 0.5);
+  border-radius: 8px;
+  color: #f3f6ff;
+  background: rgba(8, 13, 27, 0.96);
+  box-shadow: 0 9px 28px rgba(0, 0, 0, 0.46);
+  font:
+    12px 'NeoDunggeunmo Pro',
+    monospace;
+  text-align: center;
+  transform: translateY(-38px);
+}
+
+.noteTitle {
+  color: #f3f6ff;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.noteMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.noteCategory,
+.noteTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  color: #aebfdf;
+  background: rgba(111, 142, 205, 0.14);
+  font-size: 9px;
+}
+
+.noteCategory i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px currentColor;
+}
+
+.noteTag {
+  color: #c4b5ed;
+}
+
+.notePopover button {
+  padding: 6px 8px;
+  border: 1px solid rgba(151, 175, 235, 0.36);
+  border-radius: 5px;
+  color: #101a2e;
+  cursor: pointer;
+  background: #b7cdfd;
+  font:
+    10px 'NeoDunggeunmo Pro',
+    monospace;
+}
+
+.notePopover button:hover {
+  background: #d5e2ff;
+}

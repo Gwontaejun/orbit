@@ -1,7 +1,4 @@
-import type {
-  GraphModel,
-  GraphPosition,
-} from '../../../entities/note/model/graph-types';
+import type { GraphModel, GraphPosition } from '../../model/graph-types';
 
 /** Groups nodes into spatial clusters based on their category, not their relationships. */
 export function calculateCategoryLayout(

@@ -1,7 +1,4 @@
-import type {
-  GraphModel,
-  GraphPosition,
-} from '../../../entities/note/model/graph-types';
+import type { GraphModel, GraphPosition } from '../../model/graph-types';
 
 /** Arranges notes along an evenly spaced, relationship-independent 3D helix. */
 export function calculateHelixLayout(
