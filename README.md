@@ -1,77 +1,91 @@
+<div align="center">
+  <img src="./assets/images/orbit-icon-rounded.png" width="112" alt="Orbit app icon" />
+
 # Orbit
 
-> Record your ideas in 3D.
+### Record your ideas in 3D
 
-Orbit은 노트를 작성하고 노트 사이의 관계를 3D 그래프로 탐색할 수 있는 데스크톱 중심의 노트 애플리케이션입니다. 노션과 비슷한 편집 경험에 3D 지식 그래프를 결합해, 아이디어의 구조와 연결 관계를 시각적으로 확인할 수 있도록 만들었습니다.
+  <p>
+    <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React" />
+    <img src="https://img.shields.io/badge/TypeScript-6-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+    <img src="https://img.shields.io/badge/Three.js-0.185-000000?style=flat-square&logo=threedotjs&logoColor=white" alt="Three.js" />
+  </p>
 
-## 배포 주소
+  <a href="https://orbit-notes.vercel.app/">
+    <img src="https://img.shields.io/badge/Orbit_Live-Open-8BA8FF?style=for-the-badge&logo=vercel&logoColor=white" alt="Open Orbit" />
+  </a>
+</div>
 
-**[Orbit 바로가기](https://orbit-notes.vercel.app/)**
+## 소개
 
-Google 계정으로 로그인하면 사용자별 Orbit 워크스페이스가 생성되며, 작성한 노트는 Supabase에 저장됩니다. 로그인 전에는 예시 그래프를 탐색할 수 있고, 노트 열기 및 생성 시 로그인이 필요합니다.
+**Orbit**은 노트를 작성하고 노트 사이의 관계를 3D 그래프로 탐색할 수 있는 데스크톱 중심의 노트 애플리케이션입니다. 노션과 비슷한 편집 경험에 3D 지식 그래프를 결합해, 아이디어의 구조와 연결 관계를 시각적으로 확인할 수 있도록 만들었습니다.
+
+Google 계정으로 로그인하면 사용자별 Orbit 워크스페이스가 생성되며 작성한 노트는 Supabase에 저장됩니다. 로그인 전에는 예시 그래프를 자유롭게 탐색할 수 있습니다.
 
 > 현재 모바일 환경은 공식 지원 범위에 포함하지 않습니다. 데스크톱 브라우저 사용을 권장합니다.
 
 ## 주요 기능
 
-- 노션 스타일의 리치 텍스트 노트 작성 및 편집
-- 제목, 본문, 카테고리, 태그 관리
-- 카테고리 자동완성 및 신규 카테고리 생성
-- Enter 입력을 이용한 태그 칩 생성
-- 부모·자식 구조를 지원하는 계층형 노트 목록
-- 노트 선택, 하위 노트 생성 및 삭제
-- 노트와 관계를 표현하는 3D 그래프
-- 기본, 구형, Helix, 카테고리, 태그 레이아웃
-- 카테고리 및 태그별 군집 영역 표시
-- 레이아웃 전환 애니메이션
-- 연결선 표시 전환 및 부모에서 자식으로 흐르는 효과
-- 카메라 회전과 줌 컨트롤
-- 카테고리 및 태그 필터링
-- Google OAuth 로그인
-- 사용자별 데이터 분리와 Supabase RLS 적용
-- GitHub 연동 기반 Vercel 자동 배포
+- **3D 지식 그래프** — 노트와 노트 사이의 관계를 공간 위에서 탐색합니다.
+- **다양한 레이아웃** — 기본, 구형, Helix, 카테고리, 태그 레이아웃을 지원합니다.
+- **군집 시각화** — 카테고리와 태그별 노드 그룹을 은은한 영역으로 구분합니다.
+- **관계 흐름 표현** — 부모에서 자식으로 이어지는 연결선과 흐름 효과를 제공합니다.
+- **노션 스타일 에디터** — 제목과 본문, 헤딩, 목록, Todo, 코드, 정렬, 색상을 편집할 수 있습니다.
+- **노트 속성 관리** — 카테고리 자동완성, 신규 카테고리 생성, 태그 칩 입력을 지원합니다.
+- **계층형 노트 목록** — 부모·자식 구조의 노트를 펼치고 닫으며 관리할 수 있습니다.
+- **그래프 탐색 도구** — 필터, 카메라 회전, 줌, 노드 선택 기능을 제공합니다.
+- **사용자별 워크스페이스** — Google OAuth와 Supabase RLS로 사용자 데이터를 분리합니다.
 
 ## 기술 스택
 
 ### Frontend
 
-- React 19
-- TypeScript 6
-- Vite 8
-- CSS Modules
-- Zustand
+<p>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-6-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/CSS_Modules-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS Modules" />
+  <img src="https://img.shields.io/badge/Zustand-5-443E38?style=flat-square&logo=react&logoColor=white" alt="Zustand" />
+</p>
 
 ### 3D Graph
 
-- Three.js
-- React Three Fiber
-- React Three Drei
-- React Three Postprocessing
-- d3-force-3d
+<p>
+  <img src="https://img.shields.io/badge/Three.js-0.185-000000?style=flat-square&logo=threedotjs&logoColor=white" alt="Three.js" />
+  <img src="https://img.shields.io/badge/React_Three_Fiber-9-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React Three Fiber" />
+  <img src="https://img.shields.io/badge/React_Three_Drei-10-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React Three Drei" />
+  <img src="https://img.shields.io/badge/Postprocessing-3-6E56CF?style=flat-square&logo=threedotjs&logoColor=white" alt="React Three Postprocessing" />
+  <img src="https://img.shields.io/badge/d3--force--3d-3-F9A03C?style=flat-square&logo=d3dotjs&logoColor=white" alt="d3-force-3d" />
+</p>
 
 ### Editor
 
-- Tiptap 3
-- React Select
+<p>
+  <img src="https://img.shields.io/badge/Tiptap-3-0D0D0D?style=flat-square&logo=tiptap&logoColor=white" alt="Tiptap" />
+  <img src="https://img.shields.io/badge/React_Select-5-2684FF?style=flat-square&logo=react&logoColor=white" alt="React Select" />
+</p>
 
 ### Backend & Authentication
 
-- Supabase
-- PostgreSQL
-- Supabase Auth · Google OAuth
-- Row Level Security
+<p>
+  <img src="https://img.shields.io/badge/Supabase-2-3FCF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Google_OAuth-4285F4?style=flat-square&logo=google&logoColor=white" alt="Google OAuth" />
+  <img src="https://img.shields.io/badge/Row_Level_Security-3FCF8E?style=flat-square&logo=supabase&logoColor=white" alt="Row Level Security" />
+</p>
 
-### Code Quality & Deployment
+### Code Quality & Architecture
 
-- ESLint
-- Prettier
-- FSD 레이어 의존성 검사
-- Vercel
-- GitHub 기반 CI/CD
+<p>
+  <img src="https://img.shields.io/badge/Feature--Sliced_Design-8BA8FF?style=flat-square" alt="Feature-Sliced Design" />
+  <img src="https://img.shields.io/badge/ESLint-10-4B32C3?style=flat-square&logo=eslint&logoColor=white" alt="ESLint" />
+  <img src="https://img.shields.io/badge/Prettier-3-F7B93E?style=flat-square&logo=prettier&logoColor=1A2B34" alt="Prettier" />
+</p>
 
 ## 프로젝트 구조
 
-프로젝트는 Feature-Sliced Design을 기준으로 구성되어 있습니다.
+Feature-Sliced Design을 기준으로 앱 조합, 도메인, 사용자 기능, 공용 코드와 독립 UI 블록을 분리했습니다.
 
 ```text
 src/
@@ -84,9 +98,9 @@ src/
 │  │  ├─ lib/layout/            # 그래프 레이아웃 계산
 │  │  └─ model/
 │  └─ workspace/
-│     ├─ api/                   # Supabase 워크스페이스 저장소
+│     ├─ api/
 │     └─ model/
-├─ features/                    # 사용자 행동 단위 기능
+├─ features/                    # 사용자 행동 중심의 기능
 │  ├─ auth/
 │  └─ note-editor/
 ├─ shared/                      # 도메인에 종속되지 않는 공용 코드
@@ -100,7 +114,7 @@ src/
       └─ ui/
 ```
 
-각 slice는 `index.ts`를 공개 API로 사용합니다. ESLint가 다음과 같은 역방향 의존성을 검사합니다.
+각 slice는 `index.ts`를 공개 API로 사용하며 ESLint가 FSD 레이어의 역방향 의존성을 검사합니다.
 
 ```text
 app → widgets → features → entities → shared
@@ -111,92 +125,12 @@ app → widgets → features → entities → shared
 - `features`는 다른 feature 또는 상위 레이어를 참조할 수 없습니다.
 - 다른 slice의 내부 파일 대신 공개 `index.ts`를 통해 import합니다.
 
-## 로컬 실행
-
-### 요구 사항
-
-- Node.js 20 이상
-- npm
-- Supabase 프로젝트
-
-### 설치
-
-```bash
-git clone https://github.com/Gwontaejun/orbit.git
-cd orbit
-npm install
-```
-
-개발 서버를 실행합니다.
-
-```bash
-npm run dev
-```
-
-기본 개발 주소는 `http://localhost:5173`입니다.
-
-## Supabase 설정
-
-데이터베이스 테이블, 사용자 생성 트리거 및 RLS 정책은 다음 마이그레이션에 정의되어 있습니다.
-
-```text
-supabase/migrations/20260821000000_orbit_phase5.sql
-```
-
-마이그레이션에는 다음 테이블이 포함됩니다.
-
-- `profiles`
-- `workspaces`
-- `notes`
-- `categories`
-- `tags`
-- `note_tags`
-- `note_relations`
-
-Google OAuth 사용 시 Supabase의 `Authentication → URL Configuration`을 설정해야 합니다.
-
-```text
-Site URL
-https://orbit-notes.vercel.app
-
-Redirect URLs
-https://orbit-notes.vercel.app
-https://orbit-notes.vercel.app/**
-http://localhost:5173/**
-```
-
-Google Cloud Console의 Authorized redirect URI에는 Supabase 콜백 주소를 등록합니다.
-
-```text
-https://<project-ref>.supabase.co/auth/v1/callback
-```
-
-## 스크립트
-
-```bash
-npm run dev          # 개발 서버 실행
-npm run build        # TypeScript 검사 및 프로덕션 빌드
-npm run preview      # 프로덕션 빌드 미리보기
-npm run lint         # ESLint 및 FSD 의존성 검사
-npm run format       # Prettier 자동 포맷
-npm run format:check # 포맷 상태 검사
-```
-
-## 배포
-
-Orbit은 Vercel에 배포되어 있습니다. GitHub 저장소를 Vercel 프로젝트에 연결하면 다음 흐름으로 자동 배포됩니다.
-
-```text
-Pull Request 또는 브랜치 push → Preview Deployment
-main 브랜치 push             → Production Deployment
-```
-
 ## 커밋 컨벤션
 
 Conventional Commits 형식을 사용하되 변경 내용은 한국어로 작성합니다.
 
 ```text
-type(scope): 변경 내용
+type: 변경 내용
 ```
 
 ### 타입
@@ -212,7 +146,7 @@ type(scope): 변경 내용
 
 ### 작성 규칙
 
-- `type`과 `scope`는 영문 소문자로 작성합니다.
+- `type`은 영문 소문자로 작성합니다.
 - 변경 내용은 간결한 한국어로 작성합니다.
 - 문장 끝에 마침표를 붙이지 않습니다.
 - 하나의 커밋에는 하나의 목적만 담습니다.
@@ -220,11 +154,17 @@ type(scope): 변경 내용
 ### 예시
 
 ```text
-feat(note): 노트 생성 기능 추가
-fix(graph): 노드 선택 해제 시 카메라가 초기화되는 문제 수정
-style(editor): 에디터 툴바 스타일 개선
-perf(graph): 화면이 숨겨졌을 때 렌더링 중단
-refactor(workspace): 워크스페이스 상태와 Provider 분리
-chore(lint): FSD 레이어 의존성 검사 추가
-docs(readme): 프로젝트 실행 및 배포 방법 추가
+feat: 노트 생성 기능 추가
+fix: 노드 선택 해제 시 카메라가 초기화되는 문제 수정
+style: 에디터 툴바 스타일 개선
+perf: 화면이 숨겨졌을 때 렌더링 중단
+refactor: 워크스페이스 상태와 Provider 분리
+chore: FSD 레이어 의존성 검사 추가
+docs: 프로젝트 설명과 기술 스택 추가
 ```
+
+---
+
+<div align="center">
+  아이디어를 공간에 기록하고, 연결을 탐색합니다.
+</div>
